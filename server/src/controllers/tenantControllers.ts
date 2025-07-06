@@ -98,14 +98,14 @@ export const getCurrentResidences = async (req: Request, res: Response): Promise
 
 export const addFavoriteProperty = async (req: Request, res: Response): Promise<void> => {
     try {
-        const {cognitoId,propertId} = req.params
+        const {cognitoId,propertyId} = req.params
         const tenant = await prisma.tenant.findUnique({
             where:{cognitoId},
             include:{
                 favorites:true
             }
         })
-        const propertyIdNumber = Number(propertId)
+        const propertyIdNumber = Number(propertyId)
         const existingFavorites = tenant?.favorites || []
         if(!existingFavorites.some((fav) => fav.id === propertyIdNumber)){
             const updatedTanent = await prisma.tenant.update({
@@ -125,8 +125,8 @@ export const addFavoriteProperty = async (req: Request, res: Response): Promise<
 }
 export const removeFavoriteProperty = async (req: Request, res: Response): Promise<void> => {
     try {
-        const {cognitoId,propertId} = req.params
-        const propertyIdNumber = Number(propertId)
+        const {cognitoId,propertyId} = req.params
+        const propertyIdNumber = Number(propertyId)
         const updatedTenant = await prisma.tenant.update({
                 where:{cognitoId},
                 data:{

@@ -18,8 +18,6 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }))
 app.use(morgan("common"))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cors())
-
-
 app.get('/', (req, res) => {
     res.send("App is working")
 })
