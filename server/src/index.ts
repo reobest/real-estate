@@ -28,6 +28,6 @@ app.use('/tenants',authMiddleware(["tenant"]),tenantRoutes)
 app.use('/managers',authMiddleware(["manager"]),managerRoutes)
 
 
-const port  = process.env.PORT || 3002
+const port  = Number(process.env.PORT) || 3002
 
-app.listen(port,() => {console.log(`Listening on port ${port}`)})
+app.listen(port,"0.0.0.0",() => {console.log(`Listening on port ${port}`)})
