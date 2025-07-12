@@ -22,8 +22,8 @@ const CallToAction = () => {
           Discover a wide range of rental properties in your desirded location
         </h3>
         <div className="flex items-center gap-3">
-          <button className="bg-white h-10 text-black w-32 rounded-md" onClick={() => window.scrollTo({top:0,behavior:"smooth"})}>Search</button>
-          <Link href="/signup"><button className="bg-rose-500 text-white h-10 w-32 rounded-md">Sign Up</button></Link>
+         <Link href="/search"><button className="bg-white h-10 text-black w-32 rounded-md cursor-pointer focus:bg-white/60" onClick={() => window.scrollTo({top:0,behavior:"smooth"})}>Search</button></Link> 
+          <Link href="/signup"><button className="bg-rose-500 text-white h-10 w-32 rounded-md cursor-pointer">Sign Up</button></Link>
         </div>
       </div>
     </div>

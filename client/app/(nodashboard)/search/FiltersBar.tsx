@@ -95,8 +95,8 @@ const FiltersBar = () => {
         <Button
           variant="outline"
           className={cn(
-            "gap-2 rounded-xl border-primary-400 hover:bg-primary-500 hover:text-primary-100",
-            isFiltersFullOpen && "bg-primary-700 text-primary-100"
+            "gap-2 rounded-xl cursor-pointer hover:bg-black hover:text-white",
+            isFiltersFullOpen && "bg-black text-white cursor-pointer"
           )}
           onClick={() => dispatch(toggleFiltesrFullOpen())}
         >
@@ -235,16 +235,16 @@ const FiltersBar = () => {
             variant="ghost"
             className={cn(
               "px-3 py-1 rounded-none rounded-l-xl hover:bg-black hover:text-white",
-              viewMode === "list" ? "bg-black text-white hover:text-white" : ""
+              viewMode === "list" ? "bg-black text-white" : ""
             )}
             onClick={() => dispatch(setViewMode("list"))}
           >
-            <List className="w-5 h-5" />
+            <List className={`w-5 h-5`} />
           </Button>
           <Button
             variant="ghost"
             className={cn(
-              "px-3 py-1 rounded-none rounded-r-xl hover:bg-black hover:text-white",
+              "px-3 py-1 rounded-none rounded-r-xl  hover:bg-black hover:text-white",
               viewMode === "grid" ? "bg-black text-white" : ""
             )}
             onClick={() => dispatch(setViewMode("grid"))}

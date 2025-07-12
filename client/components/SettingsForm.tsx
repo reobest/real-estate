@@ -57,14 +57,14 @@ const SettingsForm = ({
               <Button
                 type="button"
                 onClick={toggleEditMode}
-                className="bg-pink-400 text-white hover:bg-pink-500"
+                className="bg-pink-400 text-white hover:bg-pink-500 cursor-pointer"
               >
                 {editMode ? "Cancel" : "Edit"}  
               </Button>
               {editMode && (
                 <Button
                   type="submit"
-                  className="bg-black/90 text-white hover:bg-black"
+                  className="bg-black/90 text-white hover:bg-black cursor-pointer"
                 >
                   Save Changes
                 </Button>

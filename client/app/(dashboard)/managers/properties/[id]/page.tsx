@@ -46,7 +46,7 @@ const PropertyTenants = () => {
   };
 
   return (
-    <div className="dashboard-container">
+    <div className="dashboard-container p-8">
       {/* Back to properties page */}
       <Link
         href="/managers/properties"

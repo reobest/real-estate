@@ -33,7 +33,9 @@ const Navbar = () => {
 
   return (
     <div className="w-full bg-black h-[50px] flex justify-between items-center px-4 py-2 fixed top-0 z-50">
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-16">
+        <div className="flex items-center gap-1 ">
+
         {
           isDashboardPage && (
             <div className="md:hidden">
@@ -52,10 +54,11 @@ const Navbar = () => {
           <span className="text-white text hover:text-white/80">RENT</span>
           <span className="text-rose-300 hover:text-rose-200">IFUL</span>
         </div>
+        </div>
         {isDashboardPage && authUser && (
           <Button
             variant="secondary"
-            className="md:ml-4 bg-white text-black hover:bg-rose-600 hover:text-black/70"
+            className="md:ml-4  text-white bg-transparent hover:bg-transparent cursor-pointer  hover:text-white/60"
             onClick={() =>
               router.push(
                 authUser?.userRole?.toLowerCase() === "manager"
@@ -149,14 +152,6 @@ const Navbar = () => {
                 Signin
               </Button>
             </Link>
-            {/* <Link href="/signup">
-            <Button
-              variant="secondary"
-              className="bg-red-600 text-white h-[30px]"
-            >
-              Signup
-            </Button>
-            </Link> */}
           </>
         )}
       </div>

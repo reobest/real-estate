@@ -28,7 +28,7 @@ const Features = () => {
                  {DescriptionArray[index]}
                 </p>
                 <Link href={`/${buttonArray[index]}`}>
-                  <Button className="w-16 h-8 bg-white text-black border border-black hover:text-white cursor-pointer">{buttonArray[index]}</Button>
+                  <Button className="bg-white text-black border border-black hover:text-white cursor-pointer px-6 py-3">{buttonArray[index]}</Button>
                 </Link>
               </div>
             </div>

@@ -43,10 +43,34 @@ const FiltersFull = () => {
     router.push(`${pathname}?${updatedSearchParams.toString()}`);
   });
 
-  const handleSubmit = () => {
-    dispatch(setFilters(localFilters));
-    updateURL(localFilters);
-  };
+const handleSubmit = async () => {
+  const updatedFilters = { ...localFilters };
+
+  // If location is provided, perform geocoding
+  if (localFilters.location) {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
+          localFilters.location
+        )}.json?access_token=${
+          process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+        }&fuzzyMatch=true`
+      );
+      const data = await response.json();
+
+      if (data.features && data.features.length > 0) {
+        const [lng, lat] = data.features[0].center;
+        updatedFilters.coordinates = [lng, lat];
+      }
+    } catch (err) {
+      console.error("Error geocoding location:", err);
+    }
+  }
+
+  dispatch(setFilters(updatedFilters));
+  updateURL(updatedFilters);
+};
+
 
   const handleReset = () => {
     setLocalFilters(initialState.filters);
@@ -63,27 +87,6 @@ const FiltersFull = () => {
     }));
   };
 
-  const handleLocationSearch = async () => {
-    try {
-      const response = await fetch(
-        `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-          localFilters.location
-        )}.json?access_token=${
-          process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
-        }&fuzzyMatch=true`
-      );
-      const data = await response.json();
-      if (data.features && data.features.length > 0) {
-        const [lng, lat] = data.features[0].center;
-        setLocalFilters((prev: any) => ({
-          ...prev,
-          coordinates: [lng, lat],
-        }));
-      }
-    } catch (err) {
-      console.error("Error search location:", err);
-    }
-  };
 
   if (!isFiltersFullOpen) return null;
 
@@ -96,21 +99,15 @@ const FiltersFull = () => {
           <div className="flex items-center">
             <Input
               placeholder="Enter location"
-              value={filters.location}
+              value={localFilters.location}
               onChange={(e) =>
                 setLocalFilters((prev: any) => ({
                   ...prev,
                   location: e.target.value,
                 }))
               }
-              className="rounded-l-xl rounded-r-none border-r-0"
+              className="rounded-xl  border-2"
             />
-            <Button
-              onClick={handleLocationSearch}
-              className="rounded-r-xl rounded-l-none border-l-none border-black shadow-none border hover:bg-primary-700 hover:text-primary-50"
-            >
-              <Search className="w-4 h-4" />
-            </Button>
           </div>
         </div>
 
@@ -281,14 +278,14 @@ const FiltersFull = () => {
         <div className="flex gap-4 mt-6">
           <Button
             onClick={handleSubmit}
-            className="flex-1 bg-black text-white rounded-xl"
+            className="flex-1 bg-black text-white rounded-xl cursor-pointer"
           >
             APPLY
           </Button>
           <Button
             onClick={handleReset}
             variant="outline"
-            className="flex-1 rounded-xl"
+            className="flex-1 rounded-xl cursor-pointer"
           >
             Reset Filters
           </Button>
