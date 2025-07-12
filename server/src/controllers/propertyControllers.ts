@@ -8,9 +8,9 @@ import axios from "axios";
 import { log } from "console";
 
 const prisma = new PrismaClient()
-// const s3Client = new S3Client({
-//   region: process.env.AWS_REGION
-// })
+const s3Client = new S3Client({
+  region: process.env.AWS_REGION
+})
 export const getProperties = async (
   req: Request,
   res: Response
@@ -104,7 +104,7 @@ export const getProperties = async (
       const lat = parseFloat(latitude as string);
       const lng = parseFloat(longitude as string);
       const radiusInKilometers = 1000;
-      const degrees = radiusInKilometers / 111; // Converts kilometers to degrees
+      const degrees = radiusInKilometers / 111; 
 
       whereConditions.push(
         Prisma.sql`ST_DWithin(
@@ -205,25 +205,24 @@ export const createProperty = async (
       managerCognitoId,
       ...propertyData
     } = req.body;
-    console.log("rayannnnnnnn" + managerCognitoId)
 
-    // const photoUrls = await Promise.all(
-    //   files.map(async (file) => {
-    //     const uploadParams = {
-    //       Bucket: process.env.S3_BUCKET_NAME!,
-    //       Key: `properties/${Date.now()}-${file.originalname}`,
-    //       Body: file.buffer,
-    //       ContentType: file.mimetype,
-    //     };
+    const photoUrls = await Promise.all(
+      files.map(async (file) => {
+        const uploadParams = {
+          Bucket: process.env.S3_BUCKET_NAME!,
+          Key: `properties/${Date.now()}-${file.originalname}`,
+          Body: file.buffer,
+          ContentType: file.mimetype,
+        };
 
-    //     const uploadResult = await new Upload({
-    //       client: s3Client,
-    //       params: uploadParams,
-    //     }).done();
+        const uploadResult = await new Upload({
+          client: s3Client,
+          params: uploadParams,
+        }).done();
 
-    //     return uploadResult.Location;
-    //   })
-    // );
+        return uploadResult.Location;
+      })
+    );
 
     const geocodingUrl = `https://nominatim.openstreetmap.org/search?${new URLSearchParams(
       {
@@ -260,7 +259,7 @@ export const createProperty = async (
     const newProperty = await prisma.property.create({
       data: {
         ...propertyData,
-        // photoUrls,
+        photoUrls,
         locationId: location.id,
         managerCognitoId,
         amenities:
