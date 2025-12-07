@@ -21,7 +21,7 @@
       "@/*": ["./src/*"]
     },
     "typeRoots": ["./node_modules/@types", "./src/types"],
-    "types": [],
+    "types": ["jest"],
     "target": "ES2017"
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
