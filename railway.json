@@ -1,0 +1,7 @@
+{
+  "build": {
+    "builder": "NIXPACKS",
+    "buildCommand": "cd server && npm install && npm run build",
+    "startCommand": "cd server && node dist/index.js"
+  }
+}
